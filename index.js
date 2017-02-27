@@ -18,8 +18,6 @@ function convertToRoman(n) {
     'I':    1
   };
 
-  var result = '';
-
   if (isNaN(n)) {
     return 'Not a number';
   }
@@ -32,17 +30,17 @@ function convertToRoman(n) {
     return 'Cannot take number greater than 3888';
   }
 
-  for (var number in romanNumbers){
-    while (n >= romanNumbers[number]){
-      result += number;
-      n = n - romanNumbers[number];
+  var result = '';
+
+  for (var symbol in romanNumbers){
+    while (n >= romanNumbers[symbol]){
+      result += symbol;
+      n = n - romanNumbers[symbol];
     }
   }
 
   return result;
 }
-
-
 
 
 
@@ -65,24 +63,32 @@ function convertToRoman2(n) {
     'I':    1
   };
 
-  var result = '';
 
   if (isNaN(n)) {
     return 'Not a number';
   }
 
   if (n === 0) {
-    return '';
+    return 'No 0 in roman numerals';
   }
 
   if (n > 3888) {
     return 'Cannot take number greater than 3888';
   }
 
-  for (var number in romanNumbers){
-    if (n >= romanNumbers[number]){
-      result = number;
-      return result + convertToRoman(n - romanNumbers[number]);
+  return getRomanNumbers(n);
+
+  function getRomanNumbers(nCopy) {
+    if (nCopy === 0) {
+      return '';
     }
+
+    for (var symbol in romanNumbers){
+      if (nCopy >= romanNumbers[symbol]) {
+        return symbol + getRomanNumbers(nCopy - romanNumbers[symbol]);
+      }
+    }
+
   }
+
 }
